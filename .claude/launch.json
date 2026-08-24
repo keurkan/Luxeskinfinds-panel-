@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "luxeskinfinds",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "luxeskinfinds", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
