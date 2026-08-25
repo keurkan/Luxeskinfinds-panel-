@@ -176,3 +176,40 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
 
 .btn:disabled { opacity: 0.42; cursor: not-allowed; }
 .btn-primary:disabled:hover { background: var(--ink); }
+
+/* ---------- pack scan ---------- */
+.dropzone {
+  margin-top: 20px; border: 1.5px dashed var(--line); border-radius: 10px;
+  background: var(--ivory); min-height: 150px; display: grid; place-items: center;
+  cursor: pointer; padding: 18px; transition: border-color .15s, background .15s;
+}
+.dropzone:hover, .dropzone.is-dragging { border-color: var(--gold-soft); background: var(--gold-wash); }
+.dropzone:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.dropzone.has-image { padding: 10px; border-style: solid; }
+.drop-empty { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--muted); font-size: 0.875rem; text-align: center; }
+.drop-preview { max-height: 220px; max-width: 100%; border-radius: 6px; display: block; }
+
+.extraction { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 20px; }
+.extraction-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.extraction-grid { margin-top: 14px; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.extraction-row { background: var(--surface); display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 9px 13px; }
+@media (max-width: 520px) { .extraction-row { grid-template-columns: 1fr; gap: 2px; } }
+.extraction-row dt { font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--muted); align-self: center; }
+.extraction-row dd { margin: 0; font-size: 0.9375rem; color: var(--ink); }
+.extraction-list { margin-top: 16px; }
+.extraction-label { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.extraction-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; }
+.extraction-list li { background: var(--ivory-deep); border-radius: 999px; padding: 4px 12px; font-size: 0.8125rem; color: var(--ink-soft); }
+
+/* ---------- pins ---------- */
+.pins { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+.pin { border: 1px solid var(--line); border-radius: 10px; padding: 18px; background: var(--ivory); }
+.pin-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.pin-angle { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--gold); }
+.pin-intent { font-size: 0.75rem; color: var(--muted); margin-left: 9px; }
+.pin-title { font-family: var(--display); font-size: 1.1875rem; line-height: 1.25; margin-top: 9px; color: var(--ink); }
+.pin-desc { font-size: 0.875rem; line-height: 1.6; color: var(--ink-soft); margin-top: 9px; }
+.pin-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 11px; font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
+.pin-meta .over { color: var(--rose); }
+.pin-extra { font-size: 0.8125rem; line-height: 1.55; color: var(--muted); margin-top: 8px; }
+.pin-extra b { color: var(--ink-soft); font-weight: 600; }

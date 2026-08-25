@@ -3,6 +3,8 @@ import { BANDS, VESSELS, emptyProduct } from "./types";
 import type { PriceBand, Product, Vessel } from "./types";
 import { serializeProduct, serializeProducts } from "./serialize";
 import { VesselTile } from "./VesselArt";
+import { PackScan } from "./PackScan";
+import { PinIdeas } from "./PinIdeas";
 
 /** Turns "Beauty of Joseon" + "Relief Sun" into "beauty-of-joseon-relief-sun". */
 function slugify(text: string): string {
@@ -80,6 +82,17 @@ export default function App() {
     setIdTouched(false);
   }
 
+  function applyScan(fields: { brand: string; name: string; ingredients: string[] }) {
+    setDraft((d) => ({
+      ...d,
+      brand: fields.brand || d.brand,
+      name: fields.name || d.name,
+      // Only auto-derive the id if the user hasn't taken it over.
+      id: idTouched ? d.id : slugify(`${fields.brand || d.brand} ${fields.name || d.name}`),
+    }));
+    if (fields.ingredients.length > 0) setIngredientsRaw(fields.ingredients.join("\n"));
+  }
+
   return (
     <>
       <header className="topbar">
@@ -95,6 +108,8 @@ export default function App() {
       <div className="layout">
         {/* ---------------------------------------------------- form */}
         <div>
+          <PackScan onApply={applyScan} />
+
           <section className="card">
             <h2 className="card-title">Add a product</h2>
             <p className="card-sub">
@@ -317,6 +332,8 @@ export default function App() {
               <button className="btn btn-ghost" onClick={saveToBatch} disabled={missing.length > 0}>Add another</button>
             </div>
           </section>
+
+          <PinIdeas product={product} ready={missing.length === 0} />
 
           {saved.length > 0 && (
             <section className="card">

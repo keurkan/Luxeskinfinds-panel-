@@ -6,11 +6,17 @@ pastes straight into `src/lib/products.ts`.
 
 ```bash
 npm install
+cp .env.example .env   # add your Anthropic API key
 npm run dev
 ```
 
 Runs on **http://localhost:3001**, so it can sit alongside the site's own dev
 server on port 3000.
+
+The two AI features need an Anthropic API key. Everything else works without
+one. The key is read server-side from `.env` (gitignored) by a Vite middleware
+plugin — it never enters the client bundle, and the browser only ever calls
+same-origin `/api/*` routes.
 
 ## Why it exists
 
@@ -33,6 +39,40 @@ This tool removes that cost without changing the architecture.
   names its trade-offs.
 - **Validates the ASIN shape** (exactly 10 alphanumeric characters).
 - **Batches.** Queue several products, then copy them all at once.
+
+## Scan the pack
+
+Drop a photo of the packaging — optionally with the listing text pasted in —
+and it reads what's printed and fills in brand, name and ingredients.
+
+The system prompt is in `server/prompts.ts` and its grounding rule is a
+compliance requirement, not a style preference. The model reports only what is
+legible in the image or explicitly present in the pasted text. It leaves fields
+empty rather than guessing, never infers a property from the product category
+(an oil is not "fast-absorbing" unless the label says so), and is told
+explicitly not to fill gaps from its own knowledge of the brand — recognising a
+product is not the same as reading it.
+
+Texture, scent and claims are shown as reference rather than written into the
+form. They aren't `Product` fields, and turning a printed claim into site copy
+is a judgement call that belongs to the writer. The result also reports what it
+could not read, so you know what to verify by hand.
+
+## Pinterest pins
+
+Generates four pin ideas for the current product, one per search intent —
+problem-led, comparison, routine, ingredient-led — so they compete for
+different queries instead of being four rewordings of one idea.
+
+Each returns a title (under 60 characters, keyword first), a description
+(2–3 natural sentences, 150–300 characters, ending with `#ad` and at most two
+other hashtags), alt text, and a design note so the pins stay visually distinct
+too. Character counts are shown against their limits.
+
+Descriptions are written as prose on purpose. Pinterest ranks primarily on
+title and description keywords; hashtags carry roughly 1% of the weight, so a
+hashtag-stacked description trades away the readable copy that actually drives
+saves for almost nothing.
 
 ## What it deliberately doesn't do
 

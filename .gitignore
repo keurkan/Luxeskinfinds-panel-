@@ -25,3 +25,7 @@ dist-ssr
 
 # The marketing site lives in its own separate git repo — never track it here.
 luxeskinfinds/
+
+# Local secrets — the Anthropic key lives here, server-side only.
+.env
+.env.local
