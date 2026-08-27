@@ -5,6 +5,7 @@ import { serializeProduct, serializeProducts } from "./serialize";
 import { VesselTile } from "./VesselArt";
 import { PackScan } from "./PackScan";
 import { PinIdeas } from "./PinIdeas";
+import { ThemeToggle } from "./ThemeToggle";
 
 /** Turns "Beauty of Joseon" + "Relief Sun" into "beauty-of-joseon-relief-sun". */
 function slugify(text: string): string {
@@ -101,7 +102,10 @@ export default function App() {
             <span className="luxe">Luxe</span>
             <span className="skin">SkinFinds</span>
           </span>
-          <span className="tag">Product Panel</span>
+          <div className="topbar-actions">
+            <span className="tag">Product Panel</span>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 

@@ -86,6 +86,15 @@ export function VesselArt({ vessel }: { vessel: Vessel }) {
   }
 }
 
+/**
+ * Mirrors the site's own helper. These pastels are tuned for a warm ivory
+ * ground and would glow on a dark one, so every generated colour is mixed
+ * toward the page ground by --art-mix: 100% in light (unchanged), a small
+ * fraction in dark. Keeps the preview honest against what actually ships.
+ */
+const art = (color: string) =>
+  `color-mix(in srgb, ${color} var(--art-mix), var(--ivory))`;
+
 export function VesselTile({ id, vessel, brand }: { id: string; vessel: Vessel; brand: string }) {
   const h = hueFor(id || "placeholder");
   const h2 = (h + 16) % 360;
@@ -93,10 +102,10 @@ export function VesselTile({ id, vessel, brand }: { id: string; vessel: Vessel; 
     <div
       className="vessel-slot"
       style={{
-        backgroundColor: `hsl(${h} 32% 93%)`,
+        backgroundColor: art(`hsl(${h} 32% 93%)`),
         backgroundImage: [
-          `radial-gradient(at 25% 20%, hsl(${h} 46% 88%) 0px, transparent 60%)`,
-          `radial-gradient(at 78% 82%, hsl(${h2} 42% 90%) 0px, transparent 55%)`,
+          `radial-gradient(at 25% 20%, ${art(`hsl(${h} 46% 88%)`)} 0px, transparent 60%)`,
+          `radial-gradient(at 78% 82%, ${art(`hsl(${h2} 42% 90%)`)} 0px, transparent 55%)`,
         ].join(", "),
       }}
     >

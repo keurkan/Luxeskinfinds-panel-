@@ -40,6 +40,17 @@ This tool removes that cost without changing the architecture.
 - **Validates the ASIN shape** (exactly 10 alphanumeric characters).
 - **Batches.** Queue several products, then copy them all at once.
 
+## Theme
+
+Light by default, with a toggle in the top bar. Like the site it doesn't
+follow `prefers-color-scheme`: the panel previews a site whose canonical
+palette is light, so the OS shouldn't silently flip what you're checking your
+work against. The choice persists to `localStorage` and is applied before
+first paint by the inline script in `index.html`.
+
+Dark re-points the same token names in `index.css`, mirroring the site's own
+dark palette so the preview still reads true against what ships.
+
 ## Scan the pack
 
 Drop a photo of the packaging — optionally with the listing text pasted in —

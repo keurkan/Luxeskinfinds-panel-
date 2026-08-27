@@ -17,6 +17,53 @@
   --rose-wash: #F7EDEC;
   --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --display: "Playfair Display", Georgia, serif;
+
+  /* Surfaces that aren't a straight token lookup, pulled out so the dark
+     block can re-point them too. */
+  --topbar-bg: rgba(251, 248, 244, 0.9);
+  --vessel-brand-fg: rgba(74, 66, 59, 0.7);
+  --code-bg: #1F1B17;
+  --code-fg: #F4EEE6;
+
+  /* Decorative pastel panels in the preview; see the dark block. */
+  --art-mix: 100%;
+}
+
+/* ---------------------------------------------------------------
+   Dark theme. Same token names re-pointed, mirroring the site's own
+   dark palette so the preview still reads true against what ships.
+
+   Roles swap rather than merely darkening: --ink stays "primary text"
+   in both themes, so .btn-primary (bg --ink / text --ivory) remains a
+   correct high-contrast button either way. Gold is lifted, because
+   #A8823F fails contrast on a dark ground.
+
+   Applied by [data-theme="dark"] only — set by the toggle, never the
+   OS. The panel opens light unless you've asked for otherwise.
+   --------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  --ivory: #16130F;
+  --ivory-deep: #1E1A15;
+  --surface: #221D18;
+  --ink: #F4EEE6;
+  --ink-soft: #CFC4B6;
+  --muted: #9C9084;
+  --line: #352E26;
+  --gold: #D4AC6B;
+  --gold-soft: #B8955A;
+  --gold-wash: #2A2118;
+  --rose: #D98F94;
+  --rose-wash: #2E2022;
+
+  --topbar-bg: rgba(22, 19, 15, 0.9);
+  --vessel-brand-fg: rgba(207, 196, 182, 0.75);
+  /* Sunk below --surface so the code block still reads as inset. */
+  --code-bg: #0F0D0A;
+  --code-fg: #E8DFD2;
+
+  --art-mix: 16%;
+
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,7 +87,7 @@ body {
 /* ---------- shell ---------- */
 .topbar {
   border-bottom: 1px solid var(--line);
-  background: rgba(251, 248, 244, 0.9);
+  background: var(--topbar-bg);
   backdrop-filter: blur(8px);
   position: sticky; top: 0; z-index: 20;
 }
@@ -138,7 +185,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
 .vessel-brand {
   position: absolute; bottom: 7px; left: 0; right: 0; text-align: center;
   font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase;
-  font-weight: 600; color: rgba(74, 66, 59, 0.7);
+  font-weight: 600; color: var(--vessel-brand-fg);
 }
 .preview-brand { font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
 .preview-name { font-family: var(--display); font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.01em; margin-top: 5px; }
@@ -160,7 +207,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
 
 /* ---------- code output ---------- */
 .code {
-  background: #1F1B17; color: #F4EEE6; border-radius: 10px; padding: 18px;
+  background: var(--code-bg); color: var(--code-fg); border-radius: 10px; padding: 18px;
   font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.78rem;
   line-height: 1.6; overflow-x: auto; white-space: pre; margin-top: 16px;
 }
@@ -213,3 +260,27 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
 .pin-meta .over { color: var(--rose); }
 .pin-extra { font-size: 0.8125rem; line-height: 1.55; color: var(--muted); margin-top: 8px; }
 .pin-extra b { color: var(--ink-soft); font-weight: 600; }
+
+/* ---------- theme toggle ---------- */
+.topbar-actions { display: flex; align-items: center; gap: 12px; }
+.theme-toggle {
+  display: grid; place-items: center; flex: 0 0 auto;
+  width: 34px; height: 34px; padding: 0;
+  background: transparent; border: 1px solid var(--line); border-radius: 999px;
+  color: var(--ink-soft); cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.theme-toggle:hover { color: var(--gold); border-color: var(--gold-soft); }
+.theme-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.theme-toggle svg { width: 16px; height: 16px; }
+
+/* A disabled primary is bg:--ink, which inverts to near-white in dark — a
+   dimmed light pill ends up the brightest thing on the page. Recede it into
+   the surface instead. Dark only; the light theme's version reads correctly
+   as-is. */
+:root[data-theme="dark"] .btn-primary:disabled {
+  background: var(--line);
+  color: var(--muted);
+  opacity: 1;
+}
+:root[data-theme="dark"] .btn-primary:disabled:hover { background: var(--line); }

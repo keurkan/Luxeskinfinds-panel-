@@ -7,6 +7,15 @@
     <title>LuxeSkinFinds Panel</title>
   </head>
   <body>
+    <!-- Applies the stored theme before first paint, so a reload doesn't
+         flash light at someone who chose dark. Inline and dependency-free
+         for that reason; an unreadable store just leaves the panel light. -->
+    <script>
+      try {
+        if (localStorage.getItem("lsf-panel-theme") === "dark")
+          document.documentElement.dataset.theme = "dark";
+      } catch (e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
